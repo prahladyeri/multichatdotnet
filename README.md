@@ -13,8 +13,8 @@ A fast, lightweight, and utilitarian multi-model desktop LLM chat client built n
 ## Project Milestones & Features Roadmap
 
 ### 🟩 Phase 1: Core Foundation & API Plumbing
-- [✅] Implement secure `ServicePointManager` handling forced TLS 1.2/1.3 network handshakes.
-- [✅] Model contracts (`ChatMessage`, `ChatThread`, `Provider`) setup and local serialization pipeline.
+- [x] Implement secure `ServicePointManager` handling forced TLS 1.2/1.3 network handshakes.
+- [x] Model contracts (`ChatMessage`, `ChatThread`, `Provider`) setup and local serialization pipeline.
 - [ ] Multi-provider API routing manager supporting Groq, OpenRouter, Hugging Face, and Gemini endpoints.
 - [ ] Dynamic runtime model discovery (`GET /v1/models`) populating native UI dropdown configurations.
 - [ ] Provider configuration dialog featuring automated click-to-register URLs and token management.
