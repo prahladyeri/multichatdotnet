@@ -15,6 +15,7 @@ namespace multichatdotnet
 
     internal class ChatMessage
     {
+        internal string Id { get; set; } = Guid.NewGuid().ToString();
         internal string Role { get; set; }      // "user" or "assistant"
         internal string Content { get; set; }
         internal string ModelUsed { get; set; }  // e.g., "groq/llama-3.3-70b-versatile"
