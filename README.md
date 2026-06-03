@@ -32,6 +32,8 @@ A fast, lightweight, and utilitarian multi-model desktop LLM chat client built n
 - [ ] **Model Attributions:** Metadata badges explicitly binding the underlying generating model to every discrete message bubble.
 - [ ] **System Prompt Profiles:** Core manager template to pre-seed, store, and apply custom system behavior presets.
 - [ ] **Conversation Forking:** Instantly clone an active `List<ChatMessage>` array into a standalone branched workspace file.
+- [ ] **One-Click Scaffolder (Download):** Add a context-menu item ("Extract Project to Disk") to automatically parse `<file path="...">` blocks and write directories/files directly to a workspace folder.
+- [ ] **One-Click Scaffolder (Upload):** Add an attachment utility ("Attach Code Files/Folder") next to the input box to recursively serialize chosen text assets into the outgoing `<file path="...">` context payload.
 
 ### 🟧 Phase 4: Data Portability & Extensions
 - [ ] **Markdown Export Engine:** Single-click streaming compilation tool to dump full conversation logs to standard `.md` layouts.
