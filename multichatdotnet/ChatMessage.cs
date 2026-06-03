@@ -11,6 +11,8 @@ using System.Collections.Generic;
 
 namespace multichatdotnet
 {
+    internal enum ProviderEnum { Groq, HuggingFace, OpenRouter, Gemini }
+
     internal class ChatMessage
     {
         internal string Role { get; set; }      // "user" or "assistant"
@@ -21,12 +23,23 @@ namespace multichatdotnet
 
     internal class ChatThread 
     {
+        internal string Id { get; set; } = Guid.NewGuid().ToString();
+        internal string Title { get; set; } = "New Conversation";
+        internal bool IsPinned { get; set; } = false;
+
+        // Feature: Global context. Let the user define a custom system prompt per thread
+        internal string SystemPrompt { get; set; } = "You are a helpful assistant.";
+
         internal string Model { get; set; } = ""; // e.g., "groq/llama-3.3-70b-versatile"
         internal bool Stream { get; set; } = false;
+
+        // Track timestamps for proper chronological sorting in your sidebar list
+        internal DateTime LastModified { get; set; } = DateTime.Now;
+        internal DateTime CreatedAt { get; set; } = DateTime.Now;
+
         internal List<ChatMessage> Messages { get; set; } = new List<ChatMessage>();
     }
 
-    internal enum ProviderEnum { Groq, HuggingFace, OpenRouter, Gemini }
 
     internal class Provider {
         internal ProviderEnum Name { get; set; }
