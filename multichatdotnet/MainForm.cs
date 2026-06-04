@@ -32,25 +32,25 @@ namespace multichatdotnet
             return new List<Provider>
             {
                 new Provider {
-                    Name = ProviderEnum.Groq,
+                    Id= "groq",
                     DisplayName = "Groq",
                     BaseUrl = "https://api.groq.com/openai/v1",
                     RegistrationUrl = "https://console.groq.com/keys"
                 },
                 new Provider {
-                    Name = ProviderEnum.OpenRouter,
+                    Id = "openrouter",
                     DisplayName = "OpenRouter",
                     BaseUrl = "https://openrouter.ai/api/v1",
                     RegistrationUrl = "https://openrouter.ai/keys"
                 },
                 new Provider {
-                    Name = ProviderEnum.HuggingFace,
+                    Id = "huggingface",
                     DisplayName = "Hugging Face",
                     BaseUrl = "https://router.huggingface.co/v1",
                     RegistrationUrl = "https://huggingface.co/settings/tokens"
                 },
                 new Provider {
-                    Name = ProviderEnum.Gemini,
+                    Id = "gemini",
                     DisplayName = "Google Gemini",
                     BaseUrl = "https://generativelanguage.googleapis.com/v1beta/openai/", // Gemini's native OpenAI endpoint
                     RegistrationUrl = "https://aistudio.google.com/"
