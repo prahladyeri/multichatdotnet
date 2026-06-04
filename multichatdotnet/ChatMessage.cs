@@ -6,6 +6,8 @@
  * @date 2026-06-03
  */
 
+using multichatdotnet.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -31,7 +33,7 @@ namespace multichatdotnet
         // Feature: Global context. Let the user define a custom system prompt per thread
         internal string SystemPrompt { get; set; } = "You are a helpful assistant.";
 
-        internal string Model { get; set; } = ""; // e.g., "groq/llama-3.3-70b-versatile"
+        internal string ModelId { get; set; } = ""; // e.g., "groq/llama-3.3-70b-versatile"
 
         // Track timestamps for proper chronological sorting in your sidebar list
         internal DateTime LastModified { get; set; } = DateTime.Now;
@@ -64,10 +66,20 @@ namespace multichatdotnet
     }
 
 
-    internal class Provider {
+    internal class ProviderInfo 
+    {
         internal string Id { get; set; } // e.g. "groq", "openrouter", "gemini", etc.
         internal string DisplayName { get; set; }   // e.g., "Hugging Face" for clean UI strings
-        internal string ApiKey { get; set; } = "";
+
+        [JsonProperty("_apiKey")]
+        private string _apiKey;
+        [JsonIgnore]
+        internal string ApiKey 
+        {
+            get => string.IsNullOrEmpty(_apiKey) ? "" : DpapiSecretVault.Decrypt(_apiKey, System.Security.Cryptography.DataProtectionScope.CurrentUser);
+            set => _apiKey = string.IsNullOrEmpty(value) ? "" : DpapiSecretVault.Encrypt(value, System.Security.Cryptography.DataProtectionScope.CurrentUser);
+        }
+
         internal string BaseUrl { get; set; } = "";
         internal string RegistrationUrl { get; set; } = "";
         // Handy lookup helper pointing to all models tied specifically to this key profile

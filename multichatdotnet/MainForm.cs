@@ -13,6 +13,8 @@ namespace multichatdotnet
 {
     public partial class MainForm : Form
     {
+        private List<ProviderInfo> _defaultProviders;
+
         public MainForm()
         {
             InitializeComponent();
@@ -20,36 +22,36 @@ namespace multichatdotnet
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            InitializeProviders();
+            _defaultProviders = InitializeProviders();
             //this.menuStrip1.ImageList = imageList1;
             this.mnuNewChat.Image = imageList1.Images["message"];
             this.mnuExit.Image = imageList1.Images["app-exit"];
             this.mnuAbout.Image = imageList1.Images["help-info"];
         }
 
-        internal List<Provider> InitializeProviders()
+        internal List<ProviderInfo> InitializeProviders()
         {
-            return new List<Provider>
+            return new List<ProviderInfo>
             {
-                new Provider {
+                new ProviderInfo {
                     Id= "groq",
                     DisplayName = "Groq",
                     BaseUrl = "https://api.groq.com/openai/v1",
                     RegistrationUrl = "https://console.groq.com/keys"
                 },
-                new Provider {
+                new ProviderInfo {
                     Id = "openrouter",
                     DisplayName = "OpenRouter",
                     BaseUrl = "https://openrouter.ai/api/v1",
                     RegistrationUrl = "https://openrouter.ai/keys"
                 },
-                new Provider {
+                new ProviderInfo {
                     Id = "huggingface",
                     DisplayName = "Hugging Face",
                     BaseUrl = "https://router.huggingface.co/v1",
                     RegistrationUrl = "https://huggingface.co/settings/tokens"
                 },
-                new Provider {
+                new ProviderInfo {
                     Id = "gemini",
                     DisplayName = "Google Gemini",
                     BaseUrl = "https://generativelanguage.googleapis.com/v1beta/openai/", // Gemini's native OpenAI endpoint
