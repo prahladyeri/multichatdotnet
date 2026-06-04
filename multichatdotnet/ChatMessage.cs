@@ -11,14 +11,14 @@ using System.Collections.Generic;
 
 namespace multichatdotnet
 {
-    internal enum ProviderEnum { Groq, HuggingFace, OpenRouter, Gemini }
-
+    
     internal class ChatMessage
     {
         internal string Id { get; set; } = Guid.NewGuid().ToString();
         internal string Role { get; set; }      // "user" or "assistant"
         internal string Content { get; set; }
-        internal string ModelUsed { get; set; }  // e.g., "groq/llama-3.3-70b-versatile"
+        internal string ModelId { get; set; }  // llama-3.3-70b-versatile
+        internal string ProviderId { get; set; } // groq
         internal DateTime Timestamp { get; set; } = DateTime.Now;
     }
 
@@ -32,7 +32,6 @@ namespace multichatdotnet
         internal string SystemPrompt { get; set; } = "You are a helpful assistant.";
 
         internal string Model { get; set; } = ""; // e.g., "groq/llama-3.3-70b-versatile"
-        internal bool Stream { get; set; } = false;
 
         // Track timestamps for proper chronological sorting in your sidebar list
         internal DateTime LastModified { get; set; } = DateTime.Now;
@@ -45,7 +44,7 @@ namespace multichatdotnet
     {
         internal string Id { get; set; } // The exact API string identifier (e.g., "llama-3.3-70b-versatile")
         internal string DisplayName { get; set; } // Clean UI string (e.g., "Llama 3.3 70B Versatile")
-        internal ProviderEnum Provider { get; set; } // Back-reference link to its parent provider platform
+        internal string ProviderId { get; set; } // matches Provider's BaseUrl or a slug like "groq"
 
         // Static limits (used as a defensive baseline/fallback tracker before calling the network)
         internal int MaxContextTokens { get; set; } // Max context window size (e.g., 128000)
@@ -54,7 +53,8 @@ namespace multichatdotnet
 
         // Is it completely free or paid?
         internal bool IsFreeTier { get; set; } = false;
-        internal string CostPerMillionInput { get; set; } = "$0.00";
+        internal decimal CostPerMillionInputTokens { get; set; } = 0.00m;
+        internal decimal CostPerMillionOutputTokens { get; set; } = 0.00m;
 
         // Dynamic State Metrics (Updated continuously by your response header handler)
         internal long RemainingTokensThisMinute { get; set; } = -1;
@@ -65,7 +65,7 @@ namespace multichatdotnet
 
 
     internal class Provider {
-        internal ProviderEnum Name { get; set; }
+        internal string Id { get; set; } // e.g. "groq", "openrouter", "gemini", etc.
         internal string DisplayName { get; set; }   // e.g., "Hugging Face" for clean UI strings
         internal string ApiKey { get; set; } = "";
         internal string BaseUrl { get; set; } = "";
