@@ -17,11 +17,15 @@ namespace multichatdotnet
     internal class ChatMessage
     {
         internal string Id { get; set; } = Guid.NewGuid().ToString();
-        internal string Role { get; set; }      // "user" or "assistant"
+        internal string Role { get; set; }  // "user" or "assistant" or "system"
+        internal bool IsSystemInstruction => Role?.Equals("system", StringComparison.OrdinalIgnoreCase) ?? false;
         internal string Content { get; set; }
         internal string ModelId { get; set; }  // llama-3.3-70b-versatile
         internal string ProviderId { get; set; } // groq
         internal DateTime Timestamp { get; set; } = DateTime.Now;
+
+        internal bool IsError { get; set; } = false;
+        internal string ErrorDetails { get; set; } = "";
     }
 
     internal class ChatThread 
@@ -59,7 +63,9 @@ namespace multichatdotnet
         internal decimal CostPerMillionOutputTokens { get; set; } = 0.00m;
 
         // Dynamic State Metrics (Updated continuously by your response header handler)
+        [JsonIgnore]
         internal long RemainingTokensThisMinute { get; set; } = -1;
+        [JsonIgnore]
         internal DateTime TimeWhenTokenBucketResets { get; set; } = DateTime.MinValue;
 
         public override string ToString() => DisplayName;

@@ -42,6 +42,16 @@ A fast, lightweight, and utilitarian multi-model desktop LLM chat client built n
 
 ---
 
+## Provider Platform Implementation Roadmap
+- [ ] **Nvidia NIM**
+- [ ] **Google Gemini**
+- [ ] **Groq**
+- [ ] **Mistral AI**
+- [ ] **Cohere**
+- [ ] **Open Router**
+
+---
+
 ## Data Structure Contracts
 
 The local datastore layout is explicitly decoupled from provider definitions, avoiding hardcoded models and optimizing for zero-allocation stream writing.

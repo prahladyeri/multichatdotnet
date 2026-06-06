@@ -20,7 +20,7 @@ namespace multichatdotnet.Helpers
         internal string DefaultModelId { get; set; } = ""; // llama-3.3-70b-versatile
         internal string DefaultProviderId { get; set; } = ""; // groq
         internal int MaxHistoryMessages { get; set; } = 100; // context window management
-        internal List<ProviderInfo> Providers = new List<ProviderInfo>();
+        internal List<ProviderInfo> Providers { get; set; } = new List<ProviderInfo>();
 
         public static AppSettings Load()
         {
