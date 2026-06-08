@@ -11,16 +11,16 @@ using System.IO;
 
 namespace multichatdotnet.Helpers
 {
-    internal class AppSettings
+    public class AppSettings
     {
         private static string _filePath = "settings.json";
 
-        internal bool StreamByDefault { get; set; } = true;
-        internal bool RenderMarkdown { get; set; } = true;
-        internal string DefaultModelId { get; set; } = ""; // llama-3.3-70b-versatile
-        internal string DefaultProviderId { get; set; } = ""; // groq
-        internal int MaxHistoryMessages { get; set; } = 100; // context window management
-        internal List<ProviderInfo> Providers { get; set; } = new List<ProviderInfo>();
+        public bool StreamByDefault { get; set; } = true;
+        public bool RenderMarkdown { get; set; } = true;
+        public string DefaultModelId { get; set; } = ""; // llama-3.3-70b-versatile
+        public string DefaultProviderId { get; set; } = ""; // groq
+        public int MaxHistoryMessages { get; set; } = 100; // context window management
+        public List<ProviderInfo> Providers { get; set; } = new List<ProviderInfo>();
 
         public static AppSettings Load()
         {
@@ -31,10 +31,10 @@ namespace multichatdotnet.Helpers
             return JsonConvert.DeserializeObject<AppSettings>(content);
         }
 
-        public static void Save(AppSettings settings)
+        public void Save()
         {
             //TODO: Add validate section or method
-            string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
+            string json = JsonConvert.SerializeObject(this, Formatting.Indented);
             File.WriteAllText(_filePath, json);
         }
     }

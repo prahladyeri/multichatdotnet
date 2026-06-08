@@ -23,10 +23,14 @@ namespace multichatdotnet
         private void MainForm_Load(object sender, EventArgs e)
         {
             _defaultProviders = InitializeProviders();
-            //this.menuStrip1.ImageList = imageList1;
-            this.mnuNewChat.Image = imageList1.Images["message"];
-            this.mnuExit.Image = imageList1.Images["app-exit"];
-            this.mnuAbout.Image = imageList1.Images["help-info"];
+            
+            menuStrip1.ImageList = imageList1;
+            mnuNewChat.Image = imageList1.Images["message"];
+            mnuExit.Image = imageList1.Images["exit"];
+            mnuAbout.Image = imageList1.Images["info"];
+            mnuSettings.Image = imageList1.Images["edit"];
+            mnuProviders.Image = imageList1.Images["mainframe"];
+            mnuViewLog.Image = imageList1.Images["clock"];
         }
 
         internal List<ProviderInfo> InitializeProviders()
@@ -63,6 +67,11 @@ namespace multichatdotnet
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+
         }
     }
 }

@@ -72,7 +72,7 @@ namespace multichatdotnet
     }
 
 
-    internal class ProviderInfo 
+    public class ProviderInfo 
     {
         internal string Id { get; set; } // e.g. "groq", "openrouter", "gemini", etc.
         internal string DisplayName { get; set; }   // e.g., "Hugging Face" for clean UI strings

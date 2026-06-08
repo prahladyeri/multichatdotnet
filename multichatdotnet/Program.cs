@@ -6,7 +6,9 @@
  * @date 2026-06-03
  */
 
+using multichatdotnet.Helpers;
 using System;
+using System.IO;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
@@ -16,6 +18,11 @@ namespace multichatdotnet
     internal static class Program
     {
         private static Mutex mutex = null;
+        public static AppSettings Settings;
+        public static readonly string LocalAppData = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    Application.ProductName
+                );
 
         [STAThread]
         static void Main()
@@ -46,6 +53,7 @@ namespace multichatdotnet
             //    (System.Net.SecurityProtocolType)3072 | // TLS 1.2
             //    (System.Net.SecurityProtocolType)12288; // TLS 1.3
 
+            Settings = AppSettings.Load();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
