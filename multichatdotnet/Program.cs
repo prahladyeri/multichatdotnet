@@ -8,10 +8,12 @@
 
 using multichatdotnet.Helpers;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
+
 
 namespace multichatdotnet
 {
@@ -23,6 +25,8 @@ namespace multichatdotnet
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                     Application.ProductName
                 );
+
+        public static List<ProviderInfo> DefaultProviders;
 
         [STAThread]
         static void Main()
