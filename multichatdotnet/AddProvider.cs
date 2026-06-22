@@ -47,6 +47,13 @@ namespace multichatdotnet
         {
             //cboProvider.SelectedValue; // should return 'groq'
             if (cboProvider.SelectedItem is KeyValuePair<string, string> kvp) {
+                switch (kvp.Key) {
+                    case "gemini":
+                        break;
+                    default:
+                        MessageBox.Show("Not implemented.");
+                        return;
+                }
                 var apikey = Microsoft.VisualBasic.Interaction.InputBox("Enter API Key:");
                 if (string.IsNullOrEmpty(apikey))
                     return;
