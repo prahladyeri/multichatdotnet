@@ -101,6 +101,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="init.sql" />
+    <Content Include="licenses\multichatdotnet.txt" />
+    <Content Include="licenses\Newtonsoft.Json.txt" />
+    <Content Include="licenses\Open Icon Library-2.txt" />
+    <Content Include="licenses\Open Icon Library.txt" />
+    <Content Include="licenses\System.Data.SQLite.txt" />
   </ItemGroup>
+<ItemGroup>
+  <None Include="licenses\**\*.*">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
