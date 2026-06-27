@@ -85,7 +85,7 @@ namespace multichatdotnet
         public string Id { get; set; } // e.g. "groq", "openrouter", "gemini", etc.
         public string DisplayName { get; set; }   // e.g., "Hugging Face" for clean UI strings
 
-        public bool IsEnabled { get; set; } = true;
+        public bool IsEnabled { get; set; } = false;
 
         [JsonProperty("_apiKey")]
         private string _apiKey;

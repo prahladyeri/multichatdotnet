@@ -65,6 +65,7 @@
     <Compile Include="ChatMessage.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Helpers\DpapiSecretVault.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\ModelRankingHelper.cs" />
     <Compile Include="Helpers\DBAL.cs" />
     <Compile Include="Helpers\TaskRankingResolver.cs" />
@@ -105,7 +106,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="init.sql" />
+    <EmbeddedResource Include="init.sql" />
     <Content Include="licenses\multichatdotnet.txt" />
     <Content Include="licenses\Newtonsoft.Json.txt" />
     <Content Include="licenses\Open Icon Library-2.txt" />

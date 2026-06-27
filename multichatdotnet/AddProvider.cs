@@ -5,9 +5,12 @@
  * @license MIT
  * @date 2026-06-20
  */
+using multichatdotnet.Helpers;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -30,13 +33,17 @@ namespace multichatdotnet
             mainForm = (MainForm)this.Owner;
             cboProvider.ValueMember = "Key";
             cboProvider.DisplayMember = "Value";
+
             for (int i = 0; i < Program.DefaultProviders.Count; i++) {
                 ProviderInfo pi = Program.DefaultProviders[i];
-                ProviderInfo found= Program.Settings.Providers.FirstOrDefault(
-                    p => p.Id == pi.Id);
-                if (found == null) {
+                if (pi.IsEnabled) {
+                    TabPage page = new TabPage { Text = pi.Id, Name = pi.Id };
+                    tabControl1.TabPages.Add(page);
+                }
+                else
+                {
                     cboProvider.Items.Add(
-                        new KeyValuePair<string, string> ( pi.Id, pi.DisplayName )
+                        new KeyValuePair<string, string>(pi.Id, pi.DisplayName)
                         );
                 }
             }
@@ -58,16 +65,17 @@ namespace multichatdotnet
                 if (string.IsNullOrEmpty(apikey))
                     return;
                 
-                ProviderInfo template= Program.DefaultProviders.FirstOrDefault(p => p.Id == kvp.Key); //groq
+                ProviderInfo pi= Program.DefaultProviders.FirstOrDefault(p => p.Id == kvp.Key); //groq
                                                                                                       // Clone — don't mutate the shared template
-                ProviderInfo pi = new ProviderInfo
-                {
-                    Id = template.Id,
-                    DisplayName = template.DisplayName,
-                    BaseUrl = template.BaseUrl,
-                    RegistrationUrl = template.RegistrationUrl,
-                    ApiKey = apikey,
-                };
+                //ProviderInfo pi = new ProviderInfo
+                //{
+                //    Id = template.Id,
+                //    DisplayName = template.DisplayName,
+                //    BaseUrl = template.BaseUrl,
+                //    RegistrationUrl = template.RegistrationUrl,
+                //    ApiKey = apikey,
+                //};
+                pi.ApiKey = apikey;
                 btnAddProvider.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
                 try
@@ -81,8 +89,11 @@ namespace multichatdotnet
                     }
 
                     pi.AvailableModels = models;
-                    Program.Settings.Providers.Add(pi);
+                    //Program.Settings.StreamByDefault.Add(pi);
+                    pi.IsEnabled = true;
                     Program.Settings.Save(); // persist changes to disk.
+                    //DBAL.Execute(@"insert into providers (id, display_name, is_enabled, api_key, base_url, registration_url, ) 
+                    //values ()");
                 }
                 finally
                 {
