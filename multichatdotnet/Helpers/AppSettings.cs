@@ -17,10 +17,8 @@ namespace multichatdotnet.Helpers
 
         public bool StreamByDefault { get; set; } = true;
         public bool RenderMarkdown { get; set; } = true;
-        public string DefaultModelId { get; set; } = ""; // llama-3.3-70b-versatile
-        public string DefaultProviderId { get; set; } = ""; // groq
         public int MaxHistoryMessages { get; set; } = 100; // context window management
-        public List<ProviderInfo> Providers { get; set; } = new List<ProviderInfo>();
+        //public List<ProviderInfo> Providers { get; set; } = new List<ProviderInfo>();
 
         public static AppSettings Load()
         {

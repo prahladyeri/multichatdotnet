@@ -10,15 +10,20 @@ namespace multichatdotnet.Helpers
 {
     public class DBAL
     {
-        public static string ConnectionString { get; set; }
+        private static string _connectionString;
+
+        public static void SetConnectionString(string fname) 
+        { 
+            _connectionString = $"Data Source={fname};Version=3;Journal Mode=WAL;Cache=Shared;";
+        }
 
         // Caches for compiled delegates and metadata
         private static readonly ConcurrentDictionary<Type, PropertyInfo[]> _paramPropertiesCache = new ConcurrentDictionary<Type, PropertyInfo[]>();
         private static readonly ConcurrentDictionary<Type, object> _cachedMappers = new ConcurrentDictionary<Type, object>();
 
-        public int Execute(string sql, object parameters = null)
+        public static int Execute(string sql, object parameters = null)
         {
-            using (var conn = new SQLiteConnection(ConnectionString))
+            using (var conn = new SQLiteConnection(_connectionString))
             {
                 conn.Open();
                 using (var cmd = new SQLiteCommand(sql, conn))
@@ -29,9 +34,9 @@ namespace multichatdotnet.Helpers
             }
         }
 
-        public List<T> Query<T>(string sql, object parameters = null)
+        public static List<T> Query<T>(string sql, object parameters = null)
         {
-            using (var conn = new SQLiteConnection(ConnectionString))
+            using (var conn = new SQLiteConnection(_connectionString))
             {
                 conn.Open();
                 using (var cmd = new SQLiteCommand(sql, conn))
@@ -45,9 +50,9 @@ namespace multichatdotnet.Helpers
             }
         }
 
-        public T QueryScalar<T>(string sql, object parameters = null)
+        public static T QueryScalar<T>(string sql, object parameters = null)
         {
-            using (var conn = new SQLiteConnection(ConnectionString))
+            using (var conn = new SQLiteConnection(_connectionString))
             {
                 conn.Open();
                 using (var cmd = new SQLiteCommand(sql, conn))
@@ -63,7 +68,7 @@ namespace multichatdotnet.Helpers
             }
         }
 
-        private void AddParameters(SQLiteCommand cmd, object parameters)
+        private static void AddParameters(SQLiteCommand cmd, object parameters)
         {
             if (parameters == null) return;
 
@@ -81,7 +86,7 @@ namespace multichatdotnet.Helpers
             }
         }
 
-        private List<T> MapReaderToList<T>(IDataReader reader)
+        private static List<T> MapReaderToList<T>(IDataReader reader)
         {
             var list = new List<T>();
             var type = typeof(T);
@@ -117,7 +122,7 @@ namespace multichatdotnet.Helpers
         }
 
         // Generates an explicit block of assignments compiled straight to IL at runtime
-        private Action<IDataReader, Dictionary<string, int>, T> CreateMapperDelegate<T>()
+        private static Action<IDataReader, Dictionary<string, int>, T> CreateMapperDelegate<T>()
         {
             var readerParam = Expression.Parameter(typeof(IDataReader), "reader");
             var columnsParam = Expression.Parameter(typeof(Dictionary<string, int>), "columns");

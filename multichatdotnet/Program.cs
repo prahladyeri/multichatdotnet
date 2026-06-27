@@ -51,12 +51,13 @@ namespace multichatdotnet
             };
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
             //TODO: Future Proofing
             //System.Net.ServicePointManager.SecurityProtocol =
             //    (System.Net.SecurityProtocolType)3072 | // TLS 1.2
             //    (System.Net.SecurityProtocolType)12288; // TLS 1.3
 
+            string thePath = Path.Combine(Application.StartupPath , Application.ProductName + ".db");
+            DBAL.SetConnectionString(thePath);
             Settings = AppSettings.Load();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

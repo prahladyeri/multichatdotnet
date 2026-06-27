@@ -5,6 +5,7 @@
  * @license MIT
  * @date 2026-06-03
  */
+using multichatdotnet.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -30,7 +31,9 @@ namespace multichatdotnet
             mnuProviders.Image = imageList1.Images["mainframe"];
             mnuViewLog.Image = imageList1.Images["clock"];
 
-            if (Program.Settings.Providers.Count == 0)
+            
+            //TODO: use DBAL to fetch providers.
+            //if (Program.Settings.Providers.Count == 0)
             {
                 new AddProvider().ShowDialog(this);
             }
