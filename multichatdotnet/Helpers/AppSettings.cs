@@ -18,7 +18,7 @@ namespace multichatdotnet.Helpers
         public bool StreamByDefault { get; set; } = true;
         public bool RenderMarkdown { get; set; } = true;
         public int MaxHistoryMessages { get; set; } = 100; // context window management
-        //public List<ProviderInfo> Providers { get; set; } = new List<ProviderInfo>();
+        public List<ProviderInfo> Providers { get; set; } = new List<ProviderInfo>();
 
         public static AppSettings Load()
         {

@@ -35,16 +35,17 @@ namespace multichatdotnet
             cboProvider.DisplayMember = "Value";
 
             for (int i = 0; i < Program.DefaultProviders.Count; i++) {
-                ProviderInfo pi = Program.DefaultProviders[i];
-                if (pi.IsEnabled) {
+                ProviderInfo template = Program.DefaultProviders[i];
+                ProviderInfo pi = Program.Settings.Providers.FirstOrDefault(p => 
+                    p.Id == template.Id);
+
+                if (pi != null) {
                     TabPage page = new TabPage { Text = pi.Id, Name = pi.Id };
                     tabControl1.TabPages.Add(page);
                 }
                 else
                 {
-                    cboProvider.Items.Add(
-                        new KeyValuePair<string, string>(pi.Id, pi.DisplayName)
-                        );
+                    cboProvider.Items.Add(new KeyValuePair<string, string>(template.Id, template.DisplayName));
                 }
             }
             if (cboProvider.Items.Count > 0) cboProvider.SelectedIndex = 0;
@@ -65,17 +66,15 @@ namespace multichatdotnet
                 if (string.IsNullOrEmpty(apikey))
                     return;
                 
-                ProviderInfo pi= Program.DefaultProviders.FirstOrDefault(p => p.Id == kvp.Key); //groq
-                                                                                                      // Clone — don't mutate the shared template
-                //ProviderInfo pi = new ProviderInfo
-                //{
-                //    Id = template.Id,
-                //    DisplayName = template.DisplayName,
-                //    BaseUrl = template.BaseUrl,
-                //    RegistrationUrl = template.RegistrationUrl,
-                //    ApiKey = apikey,
-                //};
-                pi.ApiKey = apikey;
+                ProviderInfo template= Program.DefaultProviders.FirstOrDefault(p => p.Id == kvp.Key); //groq
+                ProviderInfo pi = new ProviderInfo
+                {
+                    Id = template.Id,
+                    DisplayName = template.BaseUrl,
+                    BaseUrl = template.BaseUrl,
+                    RegistrationUrl = template.RegistrationUrl,
+                    ApiKey = apikey
+                };
                 btnAddProvider.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
                 try
@@ -90,10 +89,12 @@ namespace multichatdotnet
 
                     pi.AvailableModels = models;
                     //Program.Settings.StreamByDefault.Add(pi);
-                    pi.IsEnabled = true;
+                    Program.Settings.Providers.Add(pi);
                     Program.Settings.Save(); // persist changes to disk.
                     //DBAL.Execute(@"insert into providers (id, display_name, is_enabled, api_key, base_url, registration_url, ) 
                     //values ()");
+                    cboProvider.Items.Remove(kvp);
+                    if (cboProvider.Items.Count > 0) cboProvider.SelectedIndex = 0;
                 }
                 finally
                 {

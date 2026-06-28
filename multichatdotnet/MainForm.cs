@@ -32,8 +32,9 @@ namespace multichatdotnet
             mnuProviders.Image = imageList1.Images["mainframe"];
             mnuViewLog.Image = imageList1.Images["clock"];
 
-            int cnt = Convert.ToInt32( DBAL.FetchScalar("select count(*) as cnt from providers") );
-            if (cnt == 0) {
+            //int cnt = Convert.ToInt32( DBAL.FetchScalar("select count(*) as cnt from providers") );
+            
+            if (Program.Settings.Providers.Count == 0) {
                 new AddProvider().ShowDialog(this);
             }
         }

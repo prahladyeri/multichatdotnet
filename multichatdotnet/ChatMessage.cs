@@ -79,26 +79,24 @@ namespace multichatdotnet
         public override string ToString() => DisplayName;
     }
 
-
     public class ProviderInfo 
     {
         public string Id { get; set; } // e.g. "groq", "openrouter", "gemini", etc.
         public string DisplayName { get; set; }   // e.g., "Hugging Face" for clean UI strings
 
-        public bool IsEnabled { get; set; } = false;
+        public string BaseUrl { get; set; } = "";
+        public string RegistrationUrl { get; set; } = "";
+        public Dictionary<string, string> ExtraHeaders { get; set; } = new Dictionary<string, string>();
 
         [JsonProperty("_apiKey")]
         private string _apiKey;
+
         [JsonIgnore]
-        public string ApiKey 
+        public string ApiKey
         {
             get => string.IsNullOrEmpty(_apiKey) ? "" : DpapiSecretVault.Decrypt(_apiKey, System.Security.Cryptography.DataProtectionScope.CurrentUser);
             set => _apiKey = string.IsNullOrEmpty(value) ? "" : DpapiSecretVault.Encrypt(value, System.Security.Cryptography.DataProtectionScope.CurrentUser);
         }
-
-        public string BaseUrl { get; set; } = "";
-        public string RegistrationUrl { get; set; } = "";
-        public Dictionary<string, string> ExtraHeaders { get; set; } = new Dictionary<string, string>();
 
         public List<ModelInfo> AvailableModels { get; set; } = new List<ModelInfo>();
 
